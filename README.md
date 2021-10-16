@@ -8,7 +8,7 @@ VGM to MIDI converter in Java.
 example:
 
     > jvgmtrans.bat OutRun_MagicalSoundShoweer.vgm
-    output: OutRun_MagicalSoundShoweer_YM2151.vgm, OutRun_MagicalSoundShoweer_SegaPCM.vgm
+    output: OutRun_MagicalSoundShoweer_YM2151.mid, OutRun_MagicalSoundShoweer_SegaPCM.mid
 
     (SEGA OutRun uses YM2151 and SegaPCM)
 
