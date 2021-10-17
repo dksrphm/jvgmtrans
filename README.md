@@ -1,5 +1,6 @@
 # jvgmtrans
-VGM to MIDI converter in Java.
+VGM to MIDI converter in Java.  
+You can convert .vgm file(YM2151, YM2203, OKIM6259, etc...) to MIDI file.
 
 ## Usage
     > jvgmtrans.bat VGMFILE.vgm  
@@ -31,8 +32,9 @@ Convert to MIDI 11ch
 Map to note no 70-
 
 ## Limitation
-* You *MUST* arrenge MIDI files with MIDI sequencer to listen.  
-1.Merge FMs and PCMs MIDI files.  
+* Notes in converted MIDI files will be correct, but tones would be incorrect, and drums would be silly.  
+You *MUST* arrenge MIDI files with MIDI sequencer to listen correctly.  
+1.Merge FMs and PCMs MIDI files into 1 MIDI file.  
 2.Edit Tone.  
 3.Assign Drum note to original note.  
 
