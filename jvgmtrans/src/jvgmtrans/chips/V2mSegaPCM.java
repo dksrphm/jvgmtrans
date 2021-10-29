@@ -177,7 +177,7 @@ public class V2mSegaPCM {
 			loopDisable[ch] = (dd & 0x02) >> 1;
 			bank[ch] = (dd & 0xfc) >> 2;
 			int smpNo = -1;
-			int smpIdWk = (loopAddrU[ch] << 16) + (loopAddrL[ch] << 8)+ bank[ch];
+			int smpIdWk = (loopAddrU[ch] << 24) + (loopAddrL[ch] << 16) + (bank[ch] << 8) + addrDelta[ch];
 			if ( 0 != smpIdWk ){
 				// 既に配列に登録済みのループアドレス・バンクかチェックし、存在すればsmpNoにする
 				for (int i = 0; i < smpIdNo; i++){
