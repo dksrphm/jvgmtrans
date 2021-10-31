@@ -5,7 +5,9 @@ import javax.sound.midi.MetaMessage;
 import javax.sound.midi.MidiEvent;
 import javax.sound.midi.Sequence;
 import javax.sound.midi.ShortMessage;
+import javax.sound.midi.SysexMessage;
 import javax.sound.midi.Track;
+import jvgmtrans.VGMStatus;
 
 public class Utils {
 
@@ -28,20 +30,20 @@ public class Utils {
 			// 音色を設定
 			smsg = new ShortMessage();
 			smsg.setMessage(ShortMessage.PROGRAM_CHANGE, trackNo, programNo - 1, 0);
-			track.add(new MidiEvent(smsg, 20));
+			track.add(new MidiEvent(smsg, vgmStatus.midiResolution + 20));
 			// ピッチベンド幅を設定
 			// MSB
 			smsg = new ShortMessage();
 			smsg.setMessage(ShortMessage.CONTROL_CHANGE, trackNo, 101, 0);
-			track.add(new MidiEvent(smsg, 30));
+			track.add(new MidiEvent(smsg, vgmStatus.midiResolution + 30));
 			// LSB
 			smsg = new ShortMessage();
 			smsg.setMessage(ShortMessage.CONTROL_CHANGE, trackNo, 100, 0);
-			track.add(new MidiEvent(smsg, 35));
+			track.add(new MidiEvent(smsg, vgmStatus.midiResolution + 35));
 			// Data Entry
 			smsg = new ShortMessage();
 			smsg.setMessage(ShortMessage.CONTROL_CHANGE, trackNo, 6, vgmStatus.getMidiPitchBend());
-			track.add(new MidiEvent(smsg, 40));
+			track.add(new MidiEvent(smsg, vgmStatus.midiResolution + 40));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -59,6 +61,21 @@ public class Utils {
 					new byte[]{(byte)(ll/65536), (byte)(ll%65536/256), (byte)(ll%256)},
 					3);
 			track0.add(new MidiEvent(mmsg, 0));
+
+			// GSリセット等初期化
+			SysexMessage sysMsg = new SysexMessage();
+			// system mode set
+			{
+				byte[] sysData = new byte[] { (byte)0xF0, (byte)0x41, (byte)0x10, (byte)0x42, (byte)0x12, (byte)0x00, (byte)0x00, (byte)0x7F, (byte)0x00, (byte)0x01, (byte)0xF7 };
+	            sysMsg.setMessage(sysData, sysData.length);
+				track0.add(new MidiEvent(sysMsg, 50));
+			}
+			// GS reset
+			{
+				byte[] sysData = new byte[] { (byte)0xF0, (byte)0x41, (byte)0x10, (byte)0x42, (byte)0x12, (byte)0x40, (byte)0x00, (byte)0x7F, (byte)0x00, (byte)0x41, (byte)0xF7 };
+	            sysMsg.setMessage(sysData, sysData.length);
+				track0.add(new MidiEvent(sysMsg, 100));
+			}
 		} catch (InvalidMidiDataException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
@@ -90,17 +107,17 @@ public class Utils {
 				// createされたトラック番号は、コンダクタートラックを考慮し seq.getTracks().length で得られるトラック数から2を引く
 				ShortMessage message = new ShortMessage();
 				message.setMessage(ShortMessage.PROGRAM_CHANGE, seq.getTracks().length - 2, 81 - 1, 0);
-				tracks[i].add(new MidiEvent(message, 20));
+				tracks[i].add(new MidiEvent(message, vgmStatus.midiResolution + 20));
 				// ピッチベンド幅を12に設定
 				message = new ShortMessage();
 				message.setMessage(ShortMessage.CONTROL_CHANGE, seq.getTracks().length - 2, 101, 0);
-				tracks[i].add(new MidiEvent(message, 30));
+				tracks[i].add(new MidiEvent(message, vgmStatus.midiResolution + 30));
 				message = new ShortMessage();
 				message.setMessage(ShortMessage.CONTROL_CHANGE, seq.getTracks().length - 2, 100, 0);
-				tracks[i].add(new MidiEvent(message, 35));
+				tracks[i].add(new MidiEvent(message, vgmStatus.midiResolution + 35));
 				message = new ShortMessage();
 				message.setMessage(ShortMessage.CONTROL_CHANGE, seq.getTracks().length - 2, 6, vgmStatus.getMidiPitchBend());
-				tracks[i].add(new MidiEvent(message, 40));
+				tracks[i].add(new MidiEvent(message, vgmStatus.midiResolution + 40));
 			} catch (Exception e){
 				e.printStackTrace();
 			}
