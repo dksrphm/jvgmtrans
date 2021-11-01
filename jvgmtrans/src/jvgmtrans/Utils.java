@@ -17,6 +17,7 @@ public class Utils {
 	public static void initMidiTrack(Track track, int trackNo, int programNo, String trackName, VGMStatus vgmStatus){
 		/*
 		 * MIDIトラックを初期化する。コマンドごとに少しずつずらす
+		 * 未使用
 		 */
 		MetaMessage mmsg = new MetaMessage();
 		ShortMessage smsg = new ShortMessage();
@@ -31,6 +32,7 @@ public class Utils {
 			smsg = new ShortMessage();
 			smsg.setMessage(ShortMessage.PROGRAM_CHANGE, trackNo, programNo - 1, 0);
 			track.add(new MidiEvent(smsg, vgmStatus.midiResolution + 20));
+
 			// ピッチベンド幅を設定
 			// MSB
 			smsg = new ShortMessage();
@@ -44,6 +46,11 @@ public class Utils {
 			smsg = new ShortMessage();
 			smsg.setMessage(ShortMessage.CONTROL_CHANGE, trackNo, 6, vgmStatus.getMidiPitchBend());
 			track.add(new MidiEvent(smsg, vgmStatus.midiResolution + 40));
+
+			// トラックボリューム設定
+			smsg = new ShortMessage();
+			smsg.setMessage(ShortMessage.CONTROL_CHANGE, trackNo, 7, vgmStatus.getMidiTrackVol());
+			track.add(new MidiEvent(smsg, vgmStatus.midiResolution + 45));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -108,6 +115,7 @@ public class Utils {
 				ShortMessage message = new ShortMessage();
 				message.setMessage(ShortMessage.PROGRAM_CHANGE, seq.getTracks().length - 2, 81 - 1, 0);
 				tracks[i].add(new MidiEvent(message, vgmStatus.midiResolution + 20));
+
 				// ピッチベンド幅を12に設定
 				message = new ShortMessage();
 				message.setMessage(ShortMessage.CONTROL_CHANGE, seq.getTracks().length - 2, 101, 0);
@@ -118,6 +126,11 @@ public class Utils {
 				message = new ShortMessage();
 				message.setMessage(ShortMessage.CONTROL_CHANGE, seq.getTracks().length - 2, 6, vgmStatus.getMidiPitchBend());
 				tracks[i].add(new MidiEvent(message, vgmStatus.midiResolution + 40));
+
+				// トラックボリューム設定
+				message = new ShortMessage();
+				message.setMessage(ShortMessage.CONTROL_CHANGE, seq.getTracks().length - 2, 7, vgmStatus.getMidiTrackVol());
+				tracks[i].add(new MidiEvent(message, vgmStatus.midiResolution + 45));
 			} catch (Exception e){
 				e.printStackTrace();
 			}

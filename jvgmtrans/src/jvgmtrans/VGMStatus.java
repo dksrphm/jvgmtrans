@@ -14,6 +14,7 @@ public class VGMStatus {
 	int midiResolution;
 	Track midiDrumTrack;
 	int midiPitchBend;
+	int midiTrackVol;
 	// VGMファイルのファイル名
 	String vgmFileName;
 	// Midiファイルのファイル名(～_xxxx.midの～の部分)
@@ -30,6 +31,7 @@ public class VGMStatus {
 		midiResolution = 480;
 		midiDrumTrack = null;
 		midiPitchBend = 12;
+		midiTrackVol = 100;
 		vgmFileName = "vgmfile.vgm";
 		vgmFileName = "vgmfile";
 	}
@@ -84,6 +86,14 @@ public class VGMStatus {
 
 	public void setMidiPitchBend(int midiPitchBend) {
 		this.midiPitchBend = midiPitchBend;
+	}
+
+	public int getMidiTrackVol() {
+		return midiTrackVol;
+	}
+
+	public void setMidiTrackVol(int midiTrackVol) {
+		this.midiTrackVol = midiTrackVol;
 	}
 
 	public int getMidiDelay() {
