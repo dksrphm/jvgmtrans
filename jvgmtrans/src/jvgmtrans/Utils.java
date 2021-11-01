@@ -70,19 +70,18 @@ public class Utils {
 			track0.add(new MidiEvent(mmsg, 0));
 
 			// GSリセット等初期化
-			SysexMessage sysMsg = new SysexMessage();
+			SysexMessage sysMsg;
+			byte[] sysData;
 			// system mode set
-			{
-				byte[] sysData = new byte[] { (byte)0xF0, (byte)0x41, (byte)0x10, (byte)0x42, (byte)0x12, (byte)0x00, (byte)0x00, (byte)0x7F, (byte)0x00, (byte)0x01, (byte)0xF7 };
-	            sysMsg.setMessage(sysData, sysData.length);
-				track0.add(new MidiEvent(sysMsg, 50));
-			}
+			sysMsg = new SysexMessage();
+			sysData = new byte[] { (byte)0xF0, (byte)0x41, (byte)0x10, (byte)0x42, (byte)0x12, (byte)0x00, (byte)0x00, (byte)0x7F, (byte)0x00, (byte)0x01, (byte)0xF7 };
+			sysMsg.setMessage(sysData, sysData.length);
+			track0.add(new MidiEvent(sysMsg, 50));
 			// GS reset
-			{
-				byte[] sysData = new byte[] { (byte)0xF0, (byte)0x41, (byte)0x10, (byte)0x42, (byte)0x12, (byte)0x40, (byte)0x00, (byte)0x7F, (byte)0x00, (byte)0x41, (byte)0xF7 };
-	            sysMsg.setMessage(sysData, sysData.length);
-				track0.add(new MidiEvent(sysMsg, 100));
-			}
+			sysMsg = new SysexMessage();
+			sysData = new byte[] { (byte)0xF0, (byte)0x41, (byte)0x10, (byte)0x42, (byte)0x12, (byte)0x40, (byte)0x00, (byte)0x7F, (byte)0x00, (byte)0x41, (byte)0xF7 };
+			sysMsg.setMessage(sysData, sysData.length);
+			track0.add(new MidiEvent(sysMsg, 100));
 		} catch (InvalidMidiDataException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
