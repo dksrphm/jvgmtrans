@@ -2,6 +2,12 @@
 VGM to MIDI converter in Java.  
 You can convert .vgm file(YM2151, YM2203, OKIM6259, etc...) to MIDI file.
 
+## How to build:
+    You need JDK 1.8 and Apache ant in your PC.
+
+	Setup them and
+    > ant
+
 ## Usage
     > jvgmtrans.bat VGMFILE.vgm  
     output: VGMFILE_ChipName.mid
