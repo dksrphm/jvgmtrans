@@ -8,7 +8,7 @@ You can convert .vgm file(YM2151, YM2203, OKIM6259, etc...) to MIDI file.
 	Setup them and
     > ant
 
-## Usage
+## Usage:
     > jvgmtrans.bat VGMFILE.vgm  
     output: VGMFILE_ChipName.mid
 
