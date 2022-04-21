@@ -1,16 +1,26 @@
 @echo off
 set BATPATH=%~dp0
 
-if "%1"== "" goto USAGE
+rem check how execute this batch file
+rem from explorer -> PFLAG=1, pause when exit
+rem from CMD.EXE -> PFLAG=0, not pause when exit
+set PFLAG=0
+set CSTR=%cmdcmdline%
+set CSTR=%CSTR:"=%
+rem "
+if not "%CSTR%" == "%CSTR:/c=%" set PFLAG=1
 
-set VGMFILE=%1
-echo %VGMFILE%
+if "%~1"=="" goto USAGE
 
-java -DDEBUG -classpath "%BATPATH%/bin" jvgmtrans.Jvgmtrans "%VGMFILE%" > jvgmtrans.log
+set VGMFILE="%~1"
+echo Processing %VGMFILE%
 
-rem pause
+java -DDEBUG -classpath "%BATPATH%/bin" jvgmtrans.Jvgmtrans %VGMFILE% > jvgmtrans.log
+
+if %PFLAG%==1 pause
 exit /b
 
 :USAGE
 echo Usage: jvgmtrans.bat filename.vgm
+if %PFLAG%==1 pause
 exit /b 1
